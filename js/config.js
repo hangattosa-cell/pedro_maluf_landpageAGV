@@ -14,8 +14,8 @@ window.AGV_CONFIG = {
   // Mensagem padrão para o botão "Falar com consultor" no topo
   mensagemDireta: "Olá! Vim pelo site e gostaria de tirar dúvidas sobre a Proteção Veicular Universo AGV.",
   
-  // Endpoint para Webhook (opcional - pode ser n8n, Make, Zapier ou deixar vazio se for apenas WhatsApp direto)
-  webhookUrl: "", // Ex: "https://seu-webhook.com/leads"
+  // Endpoint para Webhook do CRM próprio
+  webhookUrl: "https://prospectaturbo.vercel.app/api/lead-webhook?token=wh_xoywn996mydhncqbnauboibl",
   
   // Configurações de Meta Pixel (opcional)
   metaPixelId: "" // Ex: "1537001924772080"

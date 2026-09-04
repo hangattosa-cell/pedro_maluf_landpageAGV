@@ -266,11 +266,24 @@ Aguardo as opções de planos e valores!`;
         formData.cidade ? `Sua cidade: ${formData.cidade}` : 'Sua cidade: Não informada'
       ].join('; ');
 
+      // Mapear interesse exato para automação do CRM
+      let interesseFormatado = 'Carro';
+      const tipoLower = (formData.tipo || '').toLowerCase();
+      if (tipoLower.includes('caminhão') || tipoLower.includes('caminhao')) {
+        interesseFormatado = 'Caminhão';
+      } else if (tipoLower.includes('moto')) {
+        interesseFormatado = 'Moto';
+      } else if (tipoLower.includes('van') || tipoLower.includes('utilit')) {
+        interesseFormatado = 'Van/Utilitário';
+      } else {
+        interesseFormatado = 'Carro';
+      }
+
       const payloadCRM = {
         nome: formData.nome,
         telefone: apenasDigitos(formData.telefone),
         email: "",
-        interesse: `Proteção Veicular (${formData.tipo || 'Geral'})`,
+        interesse: interesseFormatado,
         notas: notasOpcionais
       };
 
