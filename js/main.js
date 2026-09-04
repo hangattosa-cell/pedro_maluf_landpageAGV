@@ -258,17 +258,33 @@ Aguardo as opções de planos e valores!`;
         console.warn('Não foi possível salvar na sessionStorage', err);
       }
 
+      // Preparar payload no formato exato do CRM
+      const notasOpcionais = [
+        formData.modelo ? `Marca e modelo: ${formData.modelo}` : 'Marca e modelo: Não informado',
+        formData.ano ? `Ano do veículo: ${formData.ano}` : 'Ano do veículo: Não informado',
+        formData.placa ? `Placa: ${formData.placa}` : 'Placa: Não informada',
+        formData.cidade ? `Sua cidade: ${formData.cidade}` : 'Sua cidade: Não informada'
+      ].join('; ');
+
+      const payloadCRM = {
+        nome: formData.nome,
+        telefone: apenasDigitos(formData.telefone),
+        email: "",
+        interesse: `Proteção Veicular (${formData.tipo || 'Geral'})`,
+        notas: notasOpcionais
+      };
+
       // Enviar Webhook se configurado
       if (config.webhookUrl) {
         try {
           await fetch(config.webhookUrl, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(formData),
+            body: JSON.stringify(payloadCRM),
             keepalive: true
           });
         } catch (err) {
-          console.warn('Webhook falhou ou bloqueado:', err);
+          console.warn('Webhook do CRM falhou ou bloqueado:', err);
         }
       }
 
